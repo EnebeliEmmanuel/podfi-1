@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* fonts */
+@layer base {
+  @font-face {
+    font-family: "Roboto";
+    src: url("/fonts/RobotoRegular.ttf") format("truetype");
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "Roboto";
+    src: url("/fonts/RobotoBold.ttf") format("truetype");
+    font-weight: 700;
+  }
+
+  @font-face {
+    font-family: "FuturaBk";
+    src: url("/fonts/FuturaBkBTBook.ttf") format("truetype");
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "FuturaMd";
+    src: url("/fonts/FuturaMediumBT.ttf") format("truetype");
+    font-weight: 400;
+  }
+
+  @font-face {
+    font-family: "FuturaMd";
+    src: url("/fonts/FuturaBoldBT.ttf") format("truetype");
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/MontserratRegular.ttf") format("truetype");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/MontserratSemiBold.ttf") format("truetype");
+    font-weight: 600;
+  }
+}
+
+/* navbar toggler icon and dropdown */
+.nav-icon-toggler {
+  transition: all 0.3s;
+}
+
+.nav-icon-toggler[aria-expanded="true"] {
+  transform: rotate(360deg);
+}
+
+.the-content {
+  transition: all 0.3s;
+}
+
+
+
+.profile-swiper .swiper-slide {
+  filter: brightness(0.2);
+}
+.profile-swiper .swiper-slide-active {
+  filter: brightness(1);
+  border: 3px solid #3b82f6;
+  scale: 1.2;
+}
+
+
+
+input[type='range']{ accent-color: #172554; }
