@@ -3,7 +3,12 @@ import { DeployFunction } from 'hardhat-deploy/types';
 
 const func: DeployFunction = async function(hre: HardhatRuntimeEnvironment) {
   const Podfi = await hre.ethers.getContractFactory('Podfi')
-  await Podfi.deploy()
+  const deployment = await Podfi.deploy()
+  const address = await deployment.getAddress()
+
+  await hre.run("verify:verify", {
+    address,
+  });
 };
 
 func.tags = ['deploy_podfi'];

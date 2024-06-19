@@ -9,6 +9,7 @@ import "./tasks"
 import { config  } from "./src/config"
 
 export default {
+  defaultNetwork: 'sepolia',
   solidity: '0.8.20',
   typechain: {
     outDir: 'src/typechain',
@@ -26,6 +27,7 @@ export default {
     },
     sepolia: {
       url: config.networks.sepolia.rpcUrl,
+      chainId:11155111,
       accounts: config.networks.sepolia.accounts
     }
   }

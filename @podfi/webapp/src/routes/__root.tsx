@@ -4,9 +4,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { config } from "@/lib/config"
 import { FunctionComponent, ReactNode } from 'react';
-import { ThirdwebProvider, embeddedWallet, metamaskWallet, smartWallet } from '@thirdweb-dev/react'
+import { ThirdwebProvider, coinbaseWallet, embeddedWallet, metamaskWallet, smartWallet, useAccounts } from '@thirdweb-dev/react'
 import { Sepolia, Localhost } from '@thirdweb-dev/chains'
 import { auth } from '@/lib/auth'
+import { Input } from '@/components/input'
 
 export const queryClient = new QueryClient()
 
@@ -29,6 +30,7 @@ const Providers: FunctionComponent<{ children: ReactNode }> = () => {
         supportedWallets={[
           smartWallet(embeddedWallet(), config.podfi.smartWallet),
           smartWallet(metamaskWallet(), config.podfi.smartWallet),
+          smartWallet(coinbaseWallet(), config.podfi.smartWallet),
         ]}
       >
         <OnboardingProvider>
@@ -41,7 +43,20 @@ const Providers: FunctionComponent<{ children: ReactNode }> = () => {
 
 const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const _auth = auth.hooks.useAuth()
-  console.log(_auth)
+
+  console.log(_auth.status)
+
+  if (_auth.status === 'onboarding') {
+    return (
+      <div className="fixed inset-0 backdrop-filter backdrop-blur-lg grid place-content-center">
+        <div className="bg-white p-4 shadow-md">
+          <Input
+            placeholder="@username"
+          />
+        </div>
+      </div>
+    )
+  }
 
   return children
 }

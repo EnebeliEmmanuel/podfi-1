@@ -12,8 +12,11 @@
       "@/*": [
         "./src/*"
       ],
-      "@podfi/contracts/*": [
-        "../contracts/src/*"
+      "@podfi/contracts/types/*": [
+        "../contracts/src/typechain/*"
+      ],
+      "@podfi/contracts/artifacts/*": [
+        "../contracts/artifacts/*"
       ]
     },
     "module": "ESNext",

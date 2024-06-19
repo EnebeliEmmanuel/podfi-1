@@ -11,10 +11,10 @@ function IndexPage() {
     <div className="px-10 xl:px-20 font-futuraMd text-black dark:text-white">
       <Hero />
       {/* tech used */}
-      <div className="flex flex-col sm:flex-row gap-x-4 gap-y-6 flex-wrap lg:flex-nowrap lg:gap-x-0 justify-center items-center w-fit bg-cyan-100 rounded-xl mx-auto my-32 py-4">
+      <div className="flex flex-col sm:flex-row gap-x-4 gap-y-6 flex-wrap lg:flex-nowrap justify-center items-center w-fit bg-cyan-100 rounded-xl mx-auto my-32 py-4">
         <img
           loading="lazy"
-          src="/images/movement.svg"
+          src="/images/thirdweb.svg"
           width={250}
           height={150}
         />
@@ -32,13 +32,6 @@ function IndexPage() {
           src="/images/solidity.svg"
           width={170}
           height={100}
-        />
-        <img
-          loading="lazy"
-          src="/images/particle.svg"
-          width={70}
-          height={70}
-          className="md:mr-8"
         />
       </div>
       {/* 3 squares */}
