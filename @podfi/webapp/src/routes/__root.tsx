@@ -72,8 +72,8 @@ const Providers: FunctionComponent<{ children: ReactNode }> = () => {
 const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const _auth = auth.hooks.useAuth()
   // const condition = _auth.status === 'onboarding'
-  // const condition = true
-  const condition = false
+  const condition = true
+  // const condition = false
 
   return (
     <>
@@ -116,34 +116,40 @@ const OnboardingForm = () => {
     "registerUser",
   )
 
-  const onSubmit = async (data: FormSchema) =>
-    mutateAsync({
-      args: [data.username, data.bio]
-    })
-      .then((data) => {
-        console.log(data)
-        toast({
-          title: 'Account created',
-          description: 'Account created successfully'
-        })
-      })
-      .catch((err) => {
-        console.log(err)
+  const onSubmit = async (data: FormSchema) => {
+    if (!contract) return
 
-        if (isError(err, "CALL_EXCEPTION"))
-          if (err.reason === 'USER_ALREADY_EXISTS')
-            return toast({
-              title: "Username taken",
-              description: "Username taken",
-              variant: "destructive"
-            })
+    const res = await contract.call("registerUser", [data.username, data.bio])
+    console.log(res)
 
-        toast({
-          title: "Unknown error",
-          description: (err as Error).message,
-          variant: "destructive"
-        })
-      })
+    // mutateAsync({
+    //   args: [data.username, data.bio]
+    // })
+    //   .then((data) => {
+    //     console.log(data)
+    //     toast({
+    //       title: 'Account created',
+    //       description: 'Account created successfully'
+    //     })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //
+    //     if (isError(err, "CALL_EXCEPTION"))
+    //       if (err.reason === 'USER_ALREADY_EXISTS')
+    //         return toast({
+    //           title: "Username taken",
+    //           description: "Username taken",
+    //           variant: "destructive"
+    //         })
+    //
+    //     toast({
+    //       title: "Unknown error",
+    //       description: (err as Error).message,
+    //       variant: "destructive"
+    //     })
+    //   })
+  }
 
   const { isSubmitting } = form.formState
 

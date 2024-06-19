@@ -18,9 +18,7 @@ export const Footer = () =>
           <img src="/images/podfi.png" width={150} height={100} />
         </Link>
         <p>
-          Lörem ipsum od ohet dilogi. Bell trabel, samuligt, ohöbel utom
-          diska. Jinesade bel när feras redorade i belogi. FAR paratyp i
-          muvåning, och pesask vyfisat. Viktiga poddradio har un mad och inde.{" "}
+          Come join our network of creators and listeners, come share our vision to revolutionize how creators and listeners are incentivized
         </p>
         {/* socials */}
         <div className="flex gap-x-4">
@@ -70,7 +68,7 @@ export const Footer = () =>
           <li>
             <Link to="#" className="flex hover:text-cyan-500">
               <FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 mr-2" />
-              <p>podfimuaccra@gmail.com</p>
+              <p>mail.podfi@gmail.com</p>
             </Link>
           </li>
         </ul>
