@@ -72,7 +72,8 @@ const Providers: FunctionComponent<{ children: ReactNode }> = () => {
 const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const _auth = auth.hooks.useAuth()
   // const condition = _auth.status === 'onboarding'
-  const condition = true
+  // const condition = true
+  const condition = false
 
   return (
     <>

@@ -35,7 +35,7 @@ function IndexPage() {
         />
       </div>
       {/* 3 squares */}
-      <div className="flex flex-col lg:flex-row items-center justify-between gap-4  max-w-screen-xl mx-auto">
+      <div id="how-it-works" className="flex flex-col lg:flex-row items-center justify-between gap-4  max-w-screen-xl mx-auto">
         {/* square */}
         <div className="border-blue-500 border rounded-3xl w-fit h-fit bg-blue-500">
           <div className="border-blue-500 border rounded-3xl w-fit h-fit p-12 rounded-tr-[200px] bg-white flex justify-center items-center">
@@ -104,9 +104,7 @@ function IndexPage() {
         </div>
       </div>
       <hr className="h-1 bg-blue-500 w-8/12 mx-auto border-0" />
-      {/* features */}
       <section id="features" className="text-center flex flex-col lg:flex-row gap-y-28 gap-x-12 justify-between items-center lg:items-start max-w-screen-xl mx-auto py-32">
-        {/* feature */}
         <div className="flex flex-col items-center justify-center max-w-[370px]">
           <img src="/images/coins.svg" width={100} height={100} loading="lazy" />
           <h2 className="text-3xl xs:text-4xl max-w-[210px] mt-9 mb-5">
@@ -143,8 +141,7 @@ function IndexPage() {
         </div>
       </section>
       <hr className="h-1 bg-blue-500 w-8/12 mx-auto border-0" />
-      {/* get started */}
-      <section className="font-futuraBk text-center max-w-screen-xl mx-auto my-32">
+      <section id="about" className="font-futuraBk text-center max-w-screen-xl mx-auto my-32">
         <h1 className="font-bold text-4xl xs:text-5xl font-roboto">
           Get Started
         </h1>

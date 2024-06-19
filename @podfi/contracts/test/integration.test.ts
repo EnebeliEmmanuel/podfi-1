@@ -2,7 +2,6 @@ import { Podfi } from '@/typechain';
 import { loadFixture } from '@nomicfoundation/hardhat-network-helpers';
 import { expect } from 'chai';
 import hre from 'hardhat'
-import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 
 describe("Integration tests", () => {
   const contracts = {

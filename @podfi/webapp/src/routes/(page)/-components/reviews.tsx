@@ -62,7 +62,7 @@ export const Reviews = () => {
           dynamicBullets: true,
         }}
         modules={[Autoplay, Pagination]}
-        className=" text-lg xs:text-xl lg:text-2xl text-white w-full h-fit mt-20 mb-40"
+        className=" text-lg xs:text-xl lg:text-2xl w-full h-fit mt-20 mb-40"
       >
         {reviews.map(review=>(
         <SwiperSlide className="pt-20" key={review.id}>

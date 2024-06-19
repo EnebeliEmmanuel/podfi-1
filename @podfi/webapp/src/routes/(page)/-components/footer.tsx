@@ -4,11 +4,9 @@ import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/
 import { faPhone, faEnvelope, faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 const links = [
-  { href: "#", label: "Donate" },
-  { href: "#", label: "Sign in" },
-  { href: "#", label: "Services" },
-  { href: "#", label: "How it works" },
-  { href: "#", label: "About" },
+  { href: "#features", label: "Services" },
+  { href: "#how-it-works", label: "How it works" },
+  { href: "#about", label: "About" },
 ]
 
 export const Footer = () =>
@@ -71,23 +69,8 @@ export const Footer = () =>
         <ul className="flex flex-col items-center lg:items-start gap-y-6">
           <li>
             <Link to="#" className="flex hover:text-cyan-500">
-              <FontAwesomeIcon icon={faPhone} className="h-4 w-4 mr-2" />
-              <p>(406) 222-****</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="#" className="flex hover:text-cyan-500">
               <FontAwesomeIcon icon={faEnvelope} className="h-4 w-4 mr-2" />
-              <p>Podfi@gmail.com</p>
-            </Link>
-          </li>
-          <li>
-            <Link to="#" className="flex hover:text-cyan-500">
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className="h-4 w-4 mr-2"
-              />
-              <p>2972 Westheimer Rd. Santa Ana, Illinois 85486</p>
+              <p>podfimuaccra@gmail.com</p>
             </Link>
           </li>
         </ul>
@@ -134,7 +117,4 @@ export const Footer = () =>
       </form>
     </div>
     <hr className="h-px bg-white w-full border-0" />
-    <p className="font-futuraBk text-base text-center mt-4">
-      © 2024 PodFi| Powered by whyds
-    </p>
   </footer>
