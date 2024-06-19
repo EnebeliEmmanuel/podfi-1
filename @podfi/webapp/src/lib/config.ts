@@ -9,6 +9,7 @@ const EnvSchema = z.object({
   ACCOUNT_FACTORY_ADDRESS: z.string(),
   PODFI_CONTRACT_ADDRESS: z.string(),
   ENVIRONMENT: z.enum(['production', 'development']),
+  MAGIC_PUBLIC_KEY: z.string(),
 })
 
 const env = EnvSchema.parse({
@@ -19,6 +20,7 @@ const env = EnvSchema.parse({
   THIRDWEB_CLIENT_ID: import.meta.env.VITE_THIRDWEB_CLIENT_ID,
   ACCOUNT_FACTORY_ADDRESS: import.meta.env.VITE_ACCOUNT_FACTORY_ADDRESS,
   PODFI_CONTRACT_ADDRESS: import.meta.env.VITE_PODFI_CONTRACT_ADDRESS,
+  MAGIC_PUBLIC_KEY: import.meta.env.VITE_MAGIC_PUBLIC_KEY,
   ENVIRONMENT: import.meta.env.MODE,
 })
 
@@ -33,6 +35,9 @@ export const config = {
   },
   thirdweb: {
     clientId: env.THIRDWEB_CLIENT_ID
+  },
+  magic: {
+    publicKey: env.MAGIC_PUBLIC_KEY,
   },
   smartaccount: {
     accountFactoryAddress: env.ACCOUNT_FACTORY_ADDRESS,
