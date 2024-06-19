@@ -5,12 +5,12 @@ import { Share } from "../../-components/share"
 import { Donate } from "./-components/donate"
 import { auth } from '@/lib/auth'
 
-export const Route = createFileRoute('/(page)/_page/ads-marketplace/$id')({
+export const Route = createFileRoute('/(page)/_page/podcasts/$id')({
   component: PodcastPage
 })
 
 function PodcastPage() {
-  const { user } = auth.hooks.useUnsafe()
+  const { user } = auth.hooks.useAuthUnsafe()
   const { podcastId } = useParams()
   const podcast = podcasts.find((podcast) => podcast.id == podcastId)
 

@@ -6,8 +6,8 @@ export const Route = createFileRoute('/(page)/_page/$creatorUsername/create-podc
 })
 
 function CreatePodcastPage() {
-  const { creatorUsername } = useParams()
-  const { user } = auth.hooks.useUnsafe()
+  const { creatorUsername } = Route.useParams()
+  const { user } = auth.hooks.useAuthUnsafe()
 
   return (
     <div className="pt-36 font-futuraMd min-h-screen relative overflow-hidden px-4 xs:px-10 xl:px-20 z-0">

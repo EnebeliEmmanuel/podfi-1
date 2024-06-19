@@ -4,33 +4,21 @@ import {
   faXmark,
   faBars,
   faMagnifyingGlass,
-  faSun,
-  faMoon,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-import { ConnectButton } from "@particle-network/connect-react-ui"; // @particle-network/connectkit to use Auth Core
+import { useState } from "react";
 import { auth } from "@/lib/auth";
-import { theme } from "@/lib/theme";
+import { DarkModeToggle } from "./dark-mode-toggle";
+import { ConnectButton } from "@/components/connect-button";
 
 const links = [
-  { href: "/ads-marketplace", label: "Ads Marketplace" },
+  { href: "/podcasts", label: "Podcasts" },
   { href: "/#features", label: "Features" },
 ];
 
 export const Navbar = () => {
   const { user, status } = auth.hooks.useAuth()
-  const { theme: _theme, toggle } = theme.hooks.useTheme()
-  const dark = _theme === 'dark'
   const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    if (dark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [dark])
 
   return (
     <nav className="font-futuraMd navbar text-black px-10 xl:px-20 py-6 absolute top-0 left-0 z-10 h-36 dark:text-white">
@@ -132,20 +120,8 @@ export const Navbar = () => {
           >
             <img src="/images/wallet.svg" width={18} height={18} />
           </Link>
-          {/* theme icon */}
-          <button
-            onClick={toggle}
-            className={
-              location.pathname === "/" ||
-                location.pathname === "/ads-marketplace"
-                ? "hidden xl:inline text-white hover:text-cyan-500"
-                : "hidden xl:inline text-sky-900 dark:text-white hover:text-cyan-500 dark:hover:text-cyan-500"
-            }
-          >
-            <FontAwesomeIcon icon={dark ? faSun : faMoon} className="w-6 h-6" />
-          </button>
+          <DarkModeToggle />
         </div>
-        {/* toggler icon */}
         <div
           className={
             location.pathname === "/" ||
@@ -259,13 +235,9 @@ export const Navbar = () => {
             </li>
           );
         })}
-        {/* theme icon */}
-        <button onClick={toggle} className="block xl:hidden">
-          <FontAwesomeIcon
-            icon={dark ? faSun : faMoon}
-            className="w-6 h-6 hover:text-cyan-500"
-          />
-        </button>
+        <div className="block xl:hidden">
+          <DarkModeToggle />
+        </div>
       </ul>
     </nav>
   );

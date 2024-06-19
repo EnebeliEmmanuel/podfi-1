@@ -1,8 +1,14 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@nomicfoundation/hardhat-ethers";
 import '@typechain/hardhat'
+import 'hardhat-deploy'
+import 'hardhat-deploy-ethers'
+// import "@nomicfoundation/hardhat-verify";
 import { HardhatUserConfig } from "hardhat/config";
+import "./tasks"
+import { config  } from "./src/config"
 
-const config: HardhatUserConfig = {
+export default {
   solidity: '0.8.20',
   typechain: {
     outDir: 'src/typechain',
@@ -11,6 +17,16 @@ const config: HardhatUserConfig = {
     externalArtifacts: ['externalArtifacts/*.json'],
     dontOverrideCompile: false
   },
-}
-
-export default config
+  etherscan: {
+    apiKey: config.networks.sepolia.etherscanApiKey,
+  },
+  networks: {
+    hardhat: {
+      chainId: 1337,
+    },
+    sepolia: {
+      url: config.networks.sepolia.rpcUrl,
+      accounts: config.networks.sepolia.accounts
+    }
+  }
+} satisfies HardhatUserConfig

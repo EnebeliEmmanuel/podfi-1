@@ -8,12 +8,12 @@ import { podcasts } from '@/demoData'
 import { auth } from '@/lib/auth'
 import { theme } from '@/lib/theme'
 
-export const Route = createFileRoute('/(page)/_page/ads-marketplace/')({
+export const Route = createFileRoute('/(page)/_page/podcasts/')({
   component: AdsMarketplace
 })
 
 function AdsMarketplace() {
-  const { user } = auth.hooks.useUnsafe()
+  const { user } = auth.hooks.useAuthUnsafe()
   const { theme: _theme } = theme.hooks.useTheme()
   const dark = _theme === 'dark'
 

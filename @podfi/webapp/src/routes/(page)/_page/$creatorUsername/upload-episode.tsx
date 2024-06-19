@@ -10,7 +10,7 @@ export const Route = createFileRoute('/(page)/_page/$creatorUsername/upload-epis
 })
 
 function UploadPodcastPage() {
-  const { user } = auth.hooks.useUnsafe()
+  const { user } = auth.hooks.useAuthUnsafe()
   //check for user and existing podcast
   const { creatorUsername, activePodcastId } = useParams()
   const [addParti, setAddParti] = useState(false)

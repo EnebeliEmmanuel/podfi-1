@@ -1,6 +1,6 @@
 import { Reviews } from "../-components/reviews"
 import { Hero } from "../-components/hero"
-import { createFileRoute, Link} from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 
 export const Route = createFileRoute('/(page)/_page/')({
   component: IndexPage
@@ -14,24 +14,19 @@ function IndexPage() {
       <div className="flex flex-col sm:flex-row gap-x-4 gap-y-6 flex-wrap lg:flex-nowrap lg:gap-x-0 justify-center items-center w-fit bg-cyan-100 rounded-xl mx-auto my-32 py-4">
         <img
           loading="lazy"
-          src="/images/avalanche.svg"
-          width={250}
-          height={150}
-          className="lg:-mr-4"
-        />
-        <img
-          loading="lazy"
           src="/images/movement.svg"
           width={250}
           height={150}
         />
-        <img
-          loading="lazy"
-          src="/images/chainlink.svg"
-          width={250}
-          height={150}
-          className="-ml-4"
-        />
+        <div>
+          <img
+            loading="lazy"
+            src="/images/graph.svg"
+            width={100}
+            height={100}
+            className="-ml-4 max-w-full"
+          />
+        </div>
         <img
           loading="lazy"
           src="/images/solidity.svg"

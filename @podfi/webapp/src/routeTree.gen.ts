@@ -17,8 +17,8 @@ import { Route as pagePageImport } from './routes/(page)/_page'
 import { Route as pagePageIndexImport } from './routes/(page)/_page/index'
 import { Route as pagePageEarningImport } from './routes/(page)/_page/earning'
 import { Route as pagePageCreateLivestreamImport } from './routes/(page)/_page/create-livestream'
-import { Route as pagePageAdsMarketplaceIndexImport } from './routes/(page)/_page/ads-marketplace/index'
-import { Route as pagePageAdsMarketplaceIdImport } from './routes/(page)/_page/ads-marketplace/$id'
+import { Route as pagePagePodcastsIndexImport } from './routes/(page)/_page/podcasts/index'
+import { Route as pagePagePodcastsIdImport } from './routes/(page)/_page/podcasts/$id'
 import { Route as pagePageCreatorUsernameUploadEpisodeImport } from './routes/(page)/_page/$creatorUsername/upload-episode'
 import { Route as pagePageCreatorUsernameCreatePodcastImport } from './routes/(page)/_page/$creatorUsername/create-podcast'
 import { Route as pagePageCreatorUsernameActivePodcastImport } from './routes/(page)/_page/$creatorUsername/$activePodcast'
@@ -54,14 +54,13 @@ const pagePageCreateLivestreamRoute = pagePageCreateLivestreamImport.update({
   getParentRoute: () => pagePageRoute,
 } as any)
 
-const pagePageAdsMarketplaceIndexRoute =
-  pagePageAdsMarketplaceIndexImport.update({
-    path: '/ads-marketplace/',
-    getParentRoute: () => pagePageRoute,
-  } as any)
+const pagePagePodcastsIndexRoute = pagePagePodcastsIndexImport.update({
+  path: '/podcasts/',
+  getParentRoute: () => pagePageRoute,
+} as any)
 
-const pagePageAdsMarketplaceIdRoute = pagePageAdsMarketplaceIdImport.update({
-  path: '/ads-marketplace/$id',
+const pagePagePodcastsIdRoute = pagePagePodcastsIdImport.update({
+  path: '/podcasts/$id',
   getParentRoute: () => pagePageRoute,
 } as any)
 
@@ -143,18 +142,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof pagePageCreatorUsernameUploadEpisodeImport
       parentRoute: typeof pagePageImport
     }
-    '/(page)/_page/ads-marketplace/$id': {
-      id: '/_page/ads-marketplace/$id'
-      path: '/ads-marketplace/$id'
-      fullPath: '/ads-marketplace/$id'
-      preLoaderRoute: typeof pagePageAdsMarketplaceIdImport
+    '/(page)/_page/podcasts/$id': {
+      id: '/_page/podcasts/$id'
+      path: '/podcasts/$id'
+      fullPath: '/podcasts/$id'
+      preLoaderRoute: typeof pagePagePodcastsIdImport
       parentRoute: typeof pagePageImport
     }
-    '/(page)/_page/ads-marketplace/': {
-      id: '/_page/ads-marketplace/'
-      path: '/ads-marketplace'
-      fullPath: '/ads-marketplace'
-      preLoaderRoute: typeof pagePageAdsMarketplaceIndexImport
+    '/(page)/_page/podcasts/': {
+      id: '/_page/podcasts/'
+      path: '/podcasts'
+      fullPath: '/podcasts'
+      preLoaderRoute: typeof pagePagePodcastsIndexImport
       parentRoute: typeof pagePageImport
     }
   }
@@ -171,8 +170,8 @@ export const routeTree = rootRoute.addChildren({
       pagePageCreatorUsernameActivePodcastRoute,
       pagePageCreatorUsernameCreatePodcastRoute,
       pagePageCreatorUsernameUploadEpisodeRoute,
-      pagePageAdsMarketplaceIdRoute,
-      pagePageAdsMarketplaceIndexRoute,
+      pagePagePodcastsIdRoute,
+      pagePagePodcastsIndexRoute,
     }),
   }),
 })
@@ -204,8 +203,8 @@ export const routeTree = rootRoute.addChildren({
         "/_page/$creatorUsername/$activePodcast",
         "/_page/$creatorUsername/create-podcast",
         "/_page/$creatorUsername/upload-episode",
-        "/_page/ads-marketplace/$id",
-        "/_page/ads-marketplace/"
+        "/_page/podcasts/$id",
+        "/_page/podcasts/"
       ]
     },
     "/_page/create-livestream": {
@@ -232,12 +231,12 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "(page)/_page/$creatorUsername/upload-episode.tsx",
       "parent": "/_page"
     },
-    "/_page/ads-marketplace/$id": {
-      "filePath": "(page)/_page/ads-marketplace/$id.tsx",
+    "/_page/podcasts/$id": {
+      "filePath": "(page)/_page/podcasts/$id.tsx",
       "parent": "/_page"
     },
-    "/_page/ads-marketplace/": {
-      "filePath": "(page)/_page/ads-marketplace/index.tsx",
+    "/_page/podcasts/": {
+      "filePath": "(page)/_page/podcasts/index.tsx",
       "parent": "/_page"
     }
   }

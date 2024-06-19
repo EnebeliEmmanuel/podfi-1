@@ -1,7 +1,7 @@
 import { proxy, subscribe, useSnapshot } from 'valtio'
 import { z } from 'zod'
 
-type SignedOutState = {
+export type SignedOutState = {
   status: 'signed-out'
   user: null
 }
@@ -15,7 +15,7 @@ const UserSchema = z.object({
 
 export type User = z.infer<typeof UserSchema>
 
-type SignedInState = {
+export type SignedInState = {
   status: 'signed-in'
   user: User
 }

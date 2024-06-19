@@ -3,7 +3,7 @@ import { Donate } from "./donate"
 import { auth } from "@/lib/auth"
 
 export const PodcastCard = ({ podcast }) => {
-  const { user } = auth.hooks.useUnsafe()
+  const { user } = auth.hooks.useAuthUnsafe()
 
   return (
     <div className="w-11/12 mx-auto xxs:w-[360px] h-[330px] rounded-3xl border-4 border-blue-500 relative bg-white dark:bg-neutral-800">

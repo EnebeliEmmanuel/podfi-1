@@ -3,7 +3,7 @@ import { useState } from "react"
 
 export const Donate = ({ podcastCreator }) => {
   const [donationAmount, setDonationAmount] = useState("")
-  const { user } = auth.hooks.useUnsafe()
+  const { user } = auth.hooks.useAuthUnsafe()
 
   return (
     <dialog className="donate-modal modal modal-bottom sm:modal-middle font-futuraMd">
