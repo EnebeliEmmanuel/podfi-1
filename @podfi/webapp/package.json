@@ -31,6 +31,7 @@
     "@tanstack/router-devtools": "^1.38.1",
     "@thirdweb-dev/chains": "^0.1.120",
     "@thirdweb-dev/react": "^4.9.4",
+    "@wagmi/core": "^2.11.2",
     "@web3modal/wagmi": "^5.0.2",
     "base64-encode-file": "^1.0.7",
     "class-variance-authority": "^0.7.0",

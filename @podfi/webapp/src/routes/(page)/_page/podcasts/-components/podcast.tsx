@@ -22,7 +22,7 @@ export const PodcastCard = ({ podcast }) => {
         {/* title and go btn */}
         <div className="flex items-center justify-between -ml-2 text-xl xs:text-3xl text-sky-900 dark:text-blue-200">
           <h2 className="truncate">{podcast.title}</h2>
-          <Link to={`/ads-marketplace/${podcast.id}`}>
+          <Link to={`/podcasts/${podcast.id}`}>
             <img
               src="/images/arrow.svg"
               width={50}

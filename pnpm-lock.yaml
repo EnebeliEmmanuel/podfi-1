@@ -208,6 +208,9 @@ importers:
       '@thirdweb-dev/react':
         specifier: ^4.9.4
         version: 4.9.4(@babel/core@7.24.7)(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/properties@5.7.0)(@thirdweb-dev/sdk@4.0.99)(@types/react-dom@18.3.0)(@types/react@18.3.3)(ethers@6.13.1)(fastify@4.28.0)(localforage@1.10.0)(react-dom@18.3.1)(react-native@0.74.2)(react@18.3.1)
+      '@wagmi/core':
+        specifier: ^2.11.2
+        version: 2.11.2(@types/react@18.3.3)(react@18.3.1)(viem@2.15.1)(zod@3.23.8)
       '@web3modal/wagmi':
         specifier: ^5.0.2
         version: 5.0.2(@types/react@18.3.3)(@wagmi/connectors@5.0.14)(@wagmi/core@2.11.2)(react-dom@18.3.1)(react@18.3.1)(viem@2.15.1)

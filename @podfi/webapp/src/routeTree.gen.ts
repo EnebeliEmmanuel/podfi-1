@@ -22,6 +22,7 @@ import { Route as pagePagePodcastsIdImport } from './routes/(page)/_page/podcast
 import { Route as pagePageCreatorUsernameUploadEpisodeImport } from './routes/(page)/_page/$creatorUsername/upload-episode'
 import { Route as pagePageCreatorUsernameCreatePodcastImport } from './routes/(page)/_page/$creatorUsername/create-podcast'
 import { Route as pagePageCreatorUsernameActivePodcastImport } from './routes/(page)/_page/$creatorUsername/$activePodcast'
+import { Route as pagePageProfileUsernameIndexImport } from './routes/(page)/_page/profile/$username/index'
 
 // Create Virtual Routes
 
@@ -79,6 +80,12 @@ const pagePageCreatorUsernameCreatePodcastRoute =
 const pagePageCreatorUsernameActivePodcastRoute =
   pagePageCreatorUsernameActivePodcastImport.update({
     path: '/$creatorUsername/$activePodcast',
+    getParentRoute: () => pagePageRoute,
+  } as any)
+
+const pagePageProfileUsernameIndexRoute =
+  pagePageProfileUsernameIndexImport.update({
+    path: '/profile/$username/',
     getParentRoute: () => pagePageRoute,
   } as any)
 
@@ -156,6 +163,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof pagePagePodcastsIndexImport
       parentRoute: typeof pagePageImport
     }
+    '/(page)/_page/profile/$username/': {
+      id: '/_page/profile/$username/'
+      path: '/profile/$username'
+      fullPath: '/profile/$username'
+      preLoaderRoute: typeof pagePageProfileUsernameIndexImport
+      parentRoute: typeof pagePageImport
+    }
   }
 }
 
@@ -172,6 +186,7 @@ export const routeTree = rootRoute.addChildren({
       pagePageCreatorUsernameUploadEpisodeRoute,
       pagePagePodcastsIdRoute,
       pagePagePodcastsIndexRoute,
+      pagePageProfileUsernameIndexRoute,
     }),
   }),
 })
@@ -204,7 +219,8 @@ export const routeTree = rootRoute.addChildren({
         "/_page/$creatorUsername/create-podcast",
         "/_page/$creatorUsername/upload-episode",
         "/_page/podcasts/$id",
-        "/_page/podcasts/"
+        "/_page/podcasts/",
+        "/_page/profile/$username/"
       ]
     },
     "/_page/create-livestream": {
@@ -237,6 +253,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_page/podcasts/": {
       "filePath": "(page)/_page/podcasts/index.tsx",
+      "parent": "/_page"
+    },
+    "/_page/profile/$username/": {
+      "filePath": "(page)/_page/profile/$username/index.tsx",
       "parent": "/_page"
     }
   }

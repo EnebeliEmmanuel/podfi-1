@@ -61,4 +61,13 @@ describe("Integration tests", () => {
         .getUserProfile()
     ).to.be.revertedWith('INEXISTENT_USER_ERROR')
   })
+
+  it("should fetch the a registered user's details with their username", async () => {
+    const { podfi } = contracts
+
+    const user = await podfi
+       .getUserByUsername('adophilus')
+
+    expect(user.username).to.equal('adophilus')
+  })
 })

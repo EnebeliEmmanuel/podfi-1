@@ -21,6 +21,10 @@ contract Podfi {
     return userStorage.getByAddress(msg.sender);
   }
 
+  function getUserByUsername(string calldata _username) public view returns (UserStorage.User memory) {
+    return userStorage.getByUsername(_username);
+  }
+
   function storeContent (string calldata _contentId, address _creatorAddress, string calldata _description, ContentStorage.ContentType _type, bool _isStreaming) public {
     require(msg.sender == _creatorAddress, "CREATOR_SIGNER_MISMATCH");
     contentStorage.store(_contentId, _creatorAddress, _description, _type, _isStreaming);

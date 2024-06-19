@@ -3,7 +3,6 @@ import { contracts } from "../contracts"
 import { useAccount, useReadContract } from "wagmi"
 import { config } from "../config"
 
-
 export type User = UserStorage.UserStruct
 
 export type SignedOutState = {
