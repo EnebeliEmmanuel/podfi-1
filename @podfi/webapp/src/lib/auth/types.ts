@@ -1,1 +1,1 @@
-export type { User } from './store'
+export type { User } from './hooks'

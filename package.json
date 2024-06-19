@@ -1,3 +1,6 @@
 {
-  "name": "podfi"
+  "name": "podfi",
+  "dependencies": {
+    "hono": "^4.4.7"
+  }
 }

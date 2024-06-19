@@ -8,6 +8,11 @@ export default defineConfig({
     TanStackRouterVite(),
     react()
   ],
+  server: {
+    proxy: {
+      '/api': process.env.BACKEND_URL!
+    }
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

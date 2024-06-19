@@ -11,6 +11,7 @@ import { auth } from "@/lib/auth";
 import { DarkModeToggle } from "./dark-mode-toggle";
 import { ConnectButton } from "@/components/connect-button";
 import { Section } from "@/components/section";
+import { UserProfilePictureImage } from "./user-profile-picture";
 
 const links = [
   { href: "/podcasts", label: "Podcasts" },
@@ -83,22 +84,13 @@ export const Navbar = () => {
               ? (
                 <Link
                   to={`/profile/${user.username}`}
-                  className="flex items-center gap-x-1 mr-12 text-xl hover:text-cyan-500"
+                  className="flex items-center gap-x-1 mr-12 text-xl"
                 >
-                  <div className="rounded-full w-12 h-12 border-2 border-sky-900 overflow-hidden">
-                    <img
-                      src={user.profilePictureHash}
-                      alt="user's profile picture"
-                      className="w-full h-full object-cover object-center"
-                    />
-                  </div>
+                  <UserProfilePictureImage
+                    user={user}
+                  />
                   <span
-                    className={
-                      location.pathname === "/" ||
-                        location.pathname === "/ads-marketplace"
-                        ? "text-white"
-                        : "text-sky-900 dark:text-white"
-                    }
+                    className="text-black"
                   >
                     {user.username}
                   </span>

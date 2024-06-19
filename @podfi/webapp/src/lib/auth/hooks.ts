@@ -1,11 +1,10 @@
 import { UserStorage } from "@podfi/contracts/types/contracts/UserStorage"
-import { isError } from "ethers"
 import { contracts } from "../contracts"
 import { useAccount, useReadContract } from "wagmi"
 import { config } from "../config"
 
 
-type User = UserStorage.UserStruct
+export type User = UserStorage.UserStruct
 
 export type SignedOutState = {
   status: 'signed-out'
@@ -52,6 +51,7 @@ export const useAuth = (): AuthState => {
     abi: contracts.abi.podfi,
     address: config.podfi.contractAddress,
     functionName: "getUserProfile",
+    account: account.address,
   });
 
   if (!account.isConnected)
@@ -61,7 +61,6 @@ export const useAuth = (): AuthState => {
     }
 
   if (status === 'error') {
-    console.log(error)
 
     if ((error.walk() as any).reason === 'INEXISTENT_USER_ERROR')
       return {
@@ -69,6 +68,8 @@ export const useAuth = (): AuthState => {
         address: account.address!,
         retry: refetch
       }
+
+    console.log(error)
 
     return {
       status: 'error',

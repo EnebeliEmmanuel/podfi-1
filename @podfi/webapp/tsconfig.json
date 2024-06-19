@@ -17,6 +17,9 @@
       ],
       "@podfi/contracts/artifacts/*": [
         "../contracts/artifacts/*"
+      ],
+      "@podfi/server/*": [
+        "../server/src/*"
       ]
     },
     "module": "ESNext",
