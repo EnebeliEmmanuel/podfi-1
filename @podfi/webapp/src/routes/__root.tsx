@@ -4,9 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { isError } from "ethers"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { config } from "@/lib/config"
-import { FunctionComponent, ReactNode } from 'react';
-import { ThirdwebProvider, coinbaseWallet, embeddedWallet, metamaskWallet, smartWallet, useAccounts, useContractWrite } from '@thirdweb-dev/react'
-import { Sepolia, Localhost } from '@thirdweb-dev/chains'
+import { FunctionComponent, ReactNode, useEffect } from 'react';
 import { auth } from '@/lib/auth'
 import { Input } from '@/components/ui/input'
 import { z } from "zod"
@@ -36,6 +34,9 @@ import {
 import { contracts } from '@/lib/contracts'
 import { Toaster } from '@/components/ui/toaster'
 import { useToast } from '@/components/ui/use-toast'
+import { Provider } from './-components/wagmi-connector'
+import { useWriteContract } from 'wagmi'
+import { useState } from 'react'
 
 export const queryClient = new QueryClient()
 
@@ -51,39 +52,37 @@ export const Route = createRootRoute({
 
 const Providers: FunctionComponent<{ children: ReactNode }> = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThirdwebProvider
-        clientId={config.thirdweb.clientId}
-        activeChain={Sepolia}
-        supportedWallets={[
-          smartWallet(embeddedWallet(), config.podfi.smartWallet),
-          smartWallet(metamaskWallet(), config.podfi.smartWallet),
-          smartWallet(coinbaseWallet(), config.podfi.smartWallet),
-        ]}
-      >
+    <Provider>
+      <QueryClientProvider client={queryClient}>
         <OnboardingProvider>
           <Outlet />
         </OnboardingProvider>
-      </ThirdwebProvider>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </Provider>
   )
 }
 
 const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
-  const _auth = auth.hooks.useAuth()
-  // const condition = _auth.status === 'onboarding'
-  const condition = true
-  // const condition = false
+  const { status, retry } = auth.hooks.useAuth()
+  const isOnboarding = status === 'onboarding'
+
+  const completed = () =>
+    retry()
 
   return (
     <>
-      {condition && (
-        <Dialog open={condition} showCloseBtn={false}>
+      {isOnboarding && (
+        <Dialog open={isOnboarding} showCloseBtn={false}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Create an account</DialogTitle>
+              <DialogTitle>
+                Hi friend 👋
+              </DialogTitle>
+              <DialogDescription>
+                We noticed you haven't yet created an account
+              </DialogDescription>
             </DialogHeader>
-            <OnboardingForm />
+            <OnboardingForm completed={completed} />
           </DialogContent>
         </Dialog>
       )}
@@ -99,7 +98,7 @@ const FormSchema = z.object({
 
 type FormSchema = z.infer<typeof FormSchema>
 
-const OnboardingForm = () => {
+const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> = ({ completed }) => {
   const form = useForm<FormSchema>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -110,48 +109,44 @@ const OnboardingForm = () => {
 
   const { toast } = useToast()
 
-  const { contract } = contracts.hooks.usePodfiContract()
-  const { mutateAsync } = useContractWrite(
-    contract,
-    "registerUser",
-  )
+  const { writeContract, status } = useWriteContract()
 
   const onSubmit = async (data: FormSchema) => {
-    if (!contract) return
+    writeContract({
+      abi: contracts.abi.podfi,
+      address: config.podfi.contractAddress as any,
+      functionName: "registerUser",
+      args: [data.username, data.bio]
+    }, {
+      onSuccess: async () => {
+        toast({
+          title: 'Account created',
+          description: 'Account created successfully'
+        })
+        await completed()
+      },
+      onError: err => {
+        console.log(err)
 
-    const res = await contract.call("registerUser", [data.username, data.bio])
-    console.log(res)
+        if (err.name === 'ContractFunctionExecutionError') {
+          if ((err.walk() as any).reason === 'USER_ALREADY_EXISTS')
+            return toast({
+              title: "Username taken",
+              description: "Username taken",
+              variant: "destructive"
+            })
+        }
 
-    // mutateAsync({
-    //   args: [data.username, data.bio]
-    // })
-    //   .then((data) => {
-    //     console.log(data)
-    //     toast({
-    //       title: 'Account created',
-    //       description: 'Account created successfully'
-    //     })
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //
-    //     if (isError(err, "CALL_EXCEPTION"))
-    //       if (err.reason === 'USER_ALREADY_EXISTS')
-    //         return toast({
-    //           title: "Username taken",
-    //           description: "Username taken",
-    //           variant: "destructive"
-    //         })
-    //
-    //     toast({
-    //       title: "Unknown error",
-    //       description: (err as Error).message,
-    //       variant: "destructive"
-    //     })
-    //   })
+        toast({
+          title: "Unknown error",
+          description: (err as Error).message,
+          variant: "destructive"
+        })
+      }
+    })
   }
 
-  const { isSubmitting } = form.formState
+  const isSubmitting = form.formState.isSubmitting || status === 'pending'
 
   return (
     <Form {...form}>

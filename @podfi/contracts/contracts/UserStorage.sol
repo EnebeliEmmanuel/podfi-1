@@ -45,7 +45,7 @@ contract UserStorage is Ownable {
 
   function store(address _userAddress, string calldata _username, string calldata _profilePictureHash) public onlyOwner {
     if (_doesUserExist(_getByUsername(_username)) || _doesUserExist(_getByAddress(_userAddress)))
-      revert("USER_ALREADY_REGISTERED");
+      revert("USER_ALREADY_REGISTERED_ERROR");
 
     User memory user = User({
       username: _username,

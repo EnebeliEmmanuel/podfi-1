@@ -1,7 +1,8 @@
-import { useAddress, useContract, useContractRead } from "@thirdweb-dev/react"
 import { UserStorage } from "@podfi/contracts/types/contracts/UserStorage"
 import { isError } from "ethers"
 import { contracts } from "../contracts"
+import { useAccount, useReadContract } from "wagmi"
+import { config } from "../config"
 
 
 type User = UserStorage.UserStruct
@@ -17,8 +18,8 @@ export type SignedInState = {
   user: User
 }
 
-export type LoadingState = {
-  status: 'loading'
+export type PendingState = {
+  status: 'pending'
   user?: undefined
 }
 
@@ -33,7 +34,10 @@ export type OnboardingState = {
   user?: undefined
 }
 
-type AuthState = SignedInState | SignedOutState | OnboardingState | LoadingState | ErrorState
+type AuthState = {
+  retry: () => Promise<unknown>
+}
+  & (SignedInState | SignedOutState | OnboardingState | PendingState | ErrorState)
 
 export const useAuthUnsafe = () => {
   const auth = useAuth()
@@ -42,43 +46,48 @@ export const useAuthUnsafe = () => {
 }
 
 export const useAuth = (): AuthState => {
-  const address = useAddress()
+  const account = useAccount()
 
-  const { contract } = contracts.hooks.usePodfiContract()
-  const { data, status, error } = useContractRead(
-    contract,
-    "getUserProfile",
-  );
+  const { data, status, error, refetch } = useReadContract({
+    abi: contracts.abi.podfi,
+    address: config.podfi.contractAddress,
+    functionName: "getUserProfile",
+  });
 
-  if (!address)
+  if (!account.isConnected)
     return {
-      status: 'signed-out'
+      status: 'signed-out',
+      retry: refetch
     }
 
   if (status === 'error') {
-    if (isError(error, "CALL_EXCEPTION")) {
-      if (error.reason === 'INEXISTENT_USER')
-        return {
-          status: 'onboarding',
-          address,
-        }
-    }
+    console.log(error)
+
+    if ((error.walk() as any).reason === 'INEXISTENT_USER_ERROR')
+      return {
+        status: 'onboarding',
+        address: account.address!,
+        retry: refetch
+      }
 
     return {
-      status: 'error'
+      status: 'error',
+      retry: refetch
     }
   }
 
-  if (status === 'loading')
+  if (status === 'pending')
     return {
-      status: 'loading'
+      status: 'pending',
+      retry: refetch
     }
 
-  const user: User = data
+  const user = data as User
 
   return {
     status: 'signed-in',
-    address,
-    user
+    address: account.address!,
+    user,
+    retry: refetch,
   }
 }

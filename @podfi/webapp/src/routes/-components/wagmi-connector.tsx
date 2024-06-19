@@ -1,44 +1,35 @@
-import { configureChains, createConfig, WagmiConfig } from "wagmi";
-import { mainnet } from "wagmi/chains";
-import { publicProvider } from "wagmi/providers/public";
-import { DedicatedWalletConnector } from "@magiclabs/wagmi-connector";
-import { config } from "@/lib/config"
+import { WagmiProvider } from 'wagmi'
+import { sepolia } from 'wagmi/chains'
 import { FunctionComponent, ReactNode } from "react";
+import { createWeb3Modal } from '@web3modal/wagmi/react'
+import { defaultWagmiConfig } from '@web3modal/wagmi/react/config'
+import { config } from '@/lib/config'
 
-const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet],
-  [publicProvider()]
-);
+const metadata = {
+  name: 'Web3Modal',
+  description: 'Podfi',
+  url: 'http://localhost',
+  icons: ['https://avatars.githubusercontent.com/u/37784886']
+}
 
-export const WagmiProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
+
+const wagmiConfig = defaultWagmiConfig({
+  chains: [sepolia],
+  projectId: config.walletconnect.projectId,
+  metadata,
+})
+
+createWeb3Modal({
+  wagmiConfig,
+  projectId: config.walletconnect.projectId,
+  enableAnalytics: true,
+  enableOnramp: true
+})
+
+export const Provider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   return (
-    <WagmiConfig config={
-      createConfig({
-        autoConnect: true,
-        publicClient,
-        webSocketPublicClient,
-        connectors: [
-          new DedicatedWalletConnector({
-            chains,
-            options: {
-              apiKey: config.magic.publicKey,
-              isDarkMode: true,
-              /* If using OAuth, make sure to enable OAuth options from magic dashboard */
-              oauthOptions: {
-                providers: ["google"],
-              },
-              magicSdkConfiguration: {
-                network: {
-                  rpcUrl: 'https://11155111.rpc.thirdweb.com',
-                  chainId: 11155111,
-                },
-              },
-            },
-          }),
-        ],
-      })
-    }>
+    <WagmiProvider config={wagmiConfig}>
       {children}
-    </WagmiConfig>
+    </WagmiProvider>
   )
 }

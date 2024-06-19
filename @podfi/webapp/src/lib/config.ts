@@ -43,7 +43,7 @@ export const config = {
     accountFactoryAddress: env.ACCOUNT_FACTORY_ADDRESS,
   },
   podfi: {
-    contractAddress: env.PODFI_CONTRACT_ADDRESS,
+    contractAddress: env.PODFI_CONTRACT_ADDRESS as `0x${string}`,
     smartWallet: {
       factoryAddress: env.ACCOUNT_FACTORY_ADDRESS,
       gasless: true,

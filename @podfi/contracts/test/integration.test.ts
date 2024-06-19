@@ -39,7 +39,7 @@ describe("Integration tests", () => {
     await expect(
       podfi
         .registerUser('adophilus2', 'some description')
-    ).to.be.revertedWith('USER_ALREADY_REGISTERED')
+    ).to.be.revertedWith('USER_ALREADY_REGISTERED_ERROR')
   })
 
   it("should fetch the registered user's details", async () => {

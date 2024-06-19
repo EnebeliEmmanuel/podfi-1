@@ -29,6 +29,7 @@
     "@tanstack/router-devtools": "^1.38.1",
     "@thirdweb-dev/chains": "^0.1.120",
     "@thirdweb-dev/react": "^4.9.4",
+    "@web3modal/wagmi": "^5.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "ethers": "^6.13.1",
@@ -46,6 +47,7 @@
     "thirdweb": "^5.29.6",
     "true-myth": "^7.1.0",
     "valtio": "^1.13.2",
+    "viem": "^2.15.1",
     "wagmi": "^2.10.2",
     "wavesurfer.js": "^7.7.3",
     "zod": "^3.23.8"

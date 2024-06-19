@@ -28,7 +28,7 @@ const DialogOverlay = React.forwardRef<
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
 const DialogContent = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
+  React.ElementRef<typeof DialogPrimitive.Content> & { showCloseBtn?: boolean },
   React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & { showCloseBtn?: boolean }
 >(({ className, children, showCloseBtn, ...props }, ref) => (
   <DialogPortal>
