@@ -2,9 +2,10 @@
 pragma solidity ^0.8.20;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {console} from "hardhat/console.sol";
 
 contract UserStorage is Ownable {
-
+  
   struct User {
     string username;
     address addr;
@@ -16,40 +17,46 @@ contract UserStorage is Ownable {
 
   constructor (address owner) Ownable(owner){}
 
-  function _getByUsername (string calldata username) internal view returns (User storage) {
-    return _getByAddress(usernameToAddress[username]);
+  function _getByUsername (string calldata _username) internal view returns (User storage) {
+    return _getByAddress(usernameToAddress[_username]);
   }
 
-  function getByUsername (string calldata username) public view returns (User memory) {
-    User storage user = _getByUsername(username);
-    require(_checkUserExists(user), "INEXISTENT_USER");
+  function getByUsername (string calldata _username) external view returns (User memory) {
+    User storage user = _getByUsername(_username);
+
+    if (!_doesUserExist(user))
+      revert("INEXISTENT_USER_ERROR");
+
     return user;
   }
 
-  function _getByAddress (address addr) internal view returns (User storage) {
-    return addressToUser[addr];
+  function _getByAddress (address _addr) internal view returns (User storage) {
+    return addressToUser[_addr];
   }
 
-  function getByAddress (address addr) public view returns (User memory) {
+  function getByAddress (address addr) external view returns (User memory) {
     User storage user = _getByAddress(addr);
-    require(_checkUserExists(user), "INEXISTENT_USER");
+
+    if (!_doesUserExist(user))
+      revert("INEXISTENT_USER_ERROR");
+
     return user;
   }
 
   function store(address _userAddress, string calldata _username, string calldata _profilePictureHash) public onlyOwner {
-    require(_checkUserExists(_getByUsername(_username)) == false, "USER_ALREADY_EXISTS");
-    require(_checkUserExists(_getByAddress(_userAddress)) == false, "USER_ALREADY_EXISTS");
+    if (_doesUserExist(_getByUsername(_username)) || _doesUserExist(_getByAddress(_userAddress)))
+      revert("USER_ALREADY_REGISTERED");
 
     User memory user = User({
       username: _username,
       addr: _userAddress,
       profilePictureHash: _profilePictureHash
     });
-    addressToUser[msg.sender] = user;
-    usernameToAddress[_username] = msg.sender;
+    addressToUser[_userAddress] = user;
+    usernameToAddress[_username] = _userAddress;
   }
 
-  function _checkUserExists(User memory _user) public pure returns (bool) {
+  function _doesUserExist(User memory _user) public pure returns (bool) {
     return _user.addr != address(0);
   }
 }

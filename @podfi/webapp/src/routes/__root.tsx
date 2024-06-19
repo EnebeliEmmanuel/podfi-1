@@ -1,13 +1,41 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from "@tanstack/router-devtools"
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { isError } from "ethers"
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { config } from "@/lib/config"
 import { FunctionComponent, ReactNode } from 'react';
-import { ThirdwebProvider, coinbaseWallet, embeddedWallet, metamaskWallet, smartWallet, useAccounts } from '@thirdweb-dev/react'
+import { ThirdwebProvider, coinbaseWallet, embeddedWallet, metamaskWallet, smartWallet, useAccounts, useContractWrite } from '@thirdweb-dev/react'
 import { Sepolia, Localhost } from '@thirdweb-dev/chains'
 import { auth } from '@/lib/auth'
-import { Input } from '@/components/input'
+import { Input } from '@/components/ui/input'
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button } from "@/components/ui/button"
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Textarea } from '@/components/ui/textarea'
+import { Loader2Icon, UserIcon } from 'lucide-react'
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { contracts } from '@/lib/contracts'
+import { Toaster } from '@/components/ui/toaster'
+import { useToast } from '@/components/ui/use-toast'
 
 export const queryClient = new QueryClient()
 
@@ -15,13 +43,13 @@ export const Route = createRootRoute({
   component: () => (
     <Providers>
       <Outlet />
+      <Toaster />
       <Devtools />
     </Providers>
   ),
 })
 
 const Providers: FunctionComponent<{ children: ReactNode }> = () => {
-
   return (
     <QueryClientProvider client={queryClient}>
       <ThirdwebProvider
@@ -43,22 +71,145 @@ const Providers: FunctionComponent<{ children: ReactNode }> = () => {
 
 const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({ children }) => {
   const _auth = auth.hooks.useAuth()
+  // const condition = _auth.status === 'onboarding'
+  const condition = true
 
-  console.log(_auth.status)
+  return (
+    <>
+      {condition && (
+        <Dialog open={condition} showCloseBtn={false}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Create an account</DialogTitle>
+            </DialogHeader>
+            <OnboardingForm />
+          </DialogContent>
+        </Dialog>
+      )}
+      {children}
+    </>
+  )
+}
 
-  if (_auth.status === 'onboarding') {
-    return (
-      <div className="fixed inset-0 backdrop-filter backdrop-blur-lg grid place-content-center">
-        <div className="bg-white p-4 shadow-md">
-          <Input
-            placeholder="@username"
-          />
+const FormSchema = z.object({
+  username: z.string(),
+  bio: z.string()
+})
+
+type FormSchema = z.infer<typeof FormSchema>
+
+const OnboardingForm = () => {
+  const form = useForm<FormSchema>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      username: "",
+      bio: ""
+    }
+  })
+
+  const { toast } = useToast()
+
+  const { contract } = contracts.hooks.usePodfiContract()
+  const { mutateAsync } = useContractWrite(
+    contract,
+    "registerUser",
+  )
+
+  const onSubmit = async (data: FormSchema) =>
+    mutateAsync({
+      args: [data.username, data.bio]
+    })
+      .then((data) => {
+        console.log(data)
+        toast({
+          title: 'Account created',
+          description: 'Account created successfully'
+        })
+      })
+      .catch((err) => {
+        console.log(err)
+
+        if (isError(err, "CALL_EXCEPTION"))
+          if (err.reason === 'USER_ALREADY_EXISTS')
+            return toast({
+              title: "Username taken",
+              description: "Username taken",
+              variant: "destructive"
+            })
+
+        toast({
+          title: "Unknown error",
+          description: (err as Error).message,
+          variant: "destructive"
+        })
+      })
+
+  const { isSubmitting } = form.formState
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Username
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="@username"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Bio
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Tell us a bit about yourself"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div>
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={isSubmitting}
+          >
+            {isSubmitting
+              ? (
+                <Loader2Icon className="animate-spin size-6" />
+              )
+              : (
+                <>
+                  <UserIcon className="size-6 mr-2" />
+                  Create Account
+                </>
+              )}
+          </Button>
         </div>
-      </div>
-    )
-  }
-
-  return children
+      </form>
+    </Form>
+  )
 }
 
 const Devtools = () => {
