@@ -13,26 +13,33 @@ contract Podfi {
     contentStorage = new ContentStorage(address(this));
   }
 
-  function registerUser(string calldata _username, string calldata _profilePictureHash) external{
-    userStorage.store(msg.sender, _username, _profilePictureHash);
+  function registerUser(string memory _username,
+                        string memory _name,
+                        string memory _bio,
+                        string memory _profilePictureHash) external{
+    userStorage.store(msg.sender,
+                      _username,
+                      _name,
+                      _bio,
+                      _profilePictureHash);
   }
 
   function getUserProfile() public view returns (UserStorage.User memory) {
     return userStorage.getByAddress(msg.sender);
   }
 
-  function getUserByUsername(string calldata _username) external view returns (UserStorage.User memory) {
+  function getUserByUsername(string memory _username) external view returns (UserStorage.User memory) {
     return userStorage.getByUsername(_username);
   }
 
-  function getUserContentsByUsername(string calldata _username) external view returns (ContentStorage.Content memory) {
-    UserStorage user = userStorage.getUserByUsername(_username);
+  function getUserContentsByUsername(string memory _username) external view returns (ContentStorage.Content[] memory) {
+    UserStorage.User memory user = userStorage.getByUsername(_username);
     return contentStorage.getByCreatorAddress(user.addr);
   }
 
-  function storeContent (string calldata _contentId, address _creatorAddress, string calldata _description, ContentStorage.ContentType _type, bool _isStreaming) public {
+  function storeContent (string memory _contentId, address _creatorAddress, string memory _title, string memory _description, string memory _hash, uint _duration, ContentStorage.ContentType _type, bool _isStreaming) public {
     require(msg.sender == _creatorAddress, "CREATOR_SIGNER_MISMATCH");
-    contentStorage.store(_contentId, _creatorAddress, _description, _type, _isStreaming);
+    contentStorage.store(_contentId, _creatorAddress, _title, _description, _hash, _duration, _type, _isStreaming);
   }
 }
 

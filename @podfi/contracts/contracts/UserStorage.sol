@@ -20,11 +20,11 @@ contract UserStorage is Ownable {
 
   constructor (address owner) Ownable(owner){}
 
-  function _getByUsername (string calldata _username) internal view returns (User storage) {
+  function _getByUsername (string memory _username) internal view returns (User storage) {
     return _getByAddress(usernameToAddress[_username]);
   }
 
-  function getByUsername (string calldata _username) external view returns (User memory) {
+  function getByUsername (string memory _username) external view returns (User memory) {
     User storage user = _getByUsername(_username);
 
     if (!_doesUserExist(user))
@@ -46,7 +46,11 @@ contract UserStorage is Ownable {
     return user;
   }
 
-  function store(address _userAddress, string calldata _username, string calldata _name, string calldata _bio, string calldata _profilePictureHash) public onlyOwner {
+  function store(address _userAddress,
+                 string memory _username,
+                 string memory _name,
+                 string memory _bio,
+                 string memory _profilePictureHash) public onlyOwner {
     if (_doesUserExist(_getByUsername(_username)) || _doesUserExist(_getByAddress(_userAddress)))
       revert("USER_ALREADY_REGISTERED_ERROR");
 

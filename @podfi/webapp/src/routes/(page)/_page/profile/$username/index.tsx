@@ -51,13 +51,9 @@ function ProfilePage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-x-2 w-full xs:w-fit">
-                  {creator.username !== user.username ? (
+                  {creator.username !== user.username && (
                     <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 w-full py-2 rounded-xl">
-                      Edit Profile
-                    </button>
-                  ) : (
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 w-full py-2 rounded-xl">
-                      Follow
+                      Subscribe
                     </button>
                   )}
                   {/* profile share btn */}

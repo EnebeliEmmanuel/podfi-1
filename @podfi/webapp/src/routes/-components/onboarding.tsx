@@ -60,7 +60,8 @@ export const OnboardingProvider: FunctionComponent<{ children: ReactNode }> = ({
 }
 
 const FormSchema = z.object({
-  username: z.string(),
+  username: z.string().refine(username => username.startsWith('@') ? username.slice(1) : username),
+  name: z.string(),
   bio: z.string(),
   profilePicture: z.instanceof(File),
 })
@@ -72,6 +73,7 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
     resolver: zodResolver(FormSchema),
     defaultValues: {
       username: "",
+      name: "",
       bio: "",
     }
   })
@@ -86,7 +88,7 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
       abi: contracts.abi.podfi,
       address: config.podfi.contractAddress as any,
       functionName: "registerUser",
-      args: [data.username, data.profilePictureHash]
+      args: [data.username, data.name, data.bio, data.profilePictureHash]
     }, {
       onSuccess: async () => {
         toast({
@@ -174,6 +176,25 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
               <FormControl>
                 <Input
                   placeholder="@username"
+                  {...field}
+                />
+              </FormControl>
+              <FormDescription />
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                Name
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="John Doe"
                   {...field}
                 />
               </FormControl>

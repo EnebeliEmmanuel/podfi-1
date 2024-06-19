@@ -30,11 +30,11 @@ contract ContentStorage is Ownable {
   constructor (address owner) Ownable(owner){}
   
   function store(
-    string calldata _contentId,
+    string memory _contentId,
     address _creatorAddress,
-    string calldata _title,
-    string calldata _description,
-    string calldata _hash,
+    string memory _title,
+    string memory _description,
+    string memory _hash,
     uint _duration,
     ContentType _type,
     bool _isStreaming
