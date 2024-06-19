@@ -96,8 +96,6 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
         await completed()
       },
       onError: err => {
-        console.log(err)
-
         if (err.name === 'ContractFunctionExecutionError') {
           if ((err.walk() as any).reason === 'USER_ALREADY_EXISTS')
             return toast({
@@ -106,6 +104,8 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
               variant: "destructive"
             })
         }
+
+        console.log(err)
 
         toast({
           title: "Unknown error",

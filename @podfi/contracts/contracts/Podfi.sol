@@ -13,7 +13,7 @@ contract Podfi {
     contentStorage = new ContentStorage(address(this));
   }
 
-  function registerUser(string calldata _username, string calldata _profilePictureHash) public {
+  function registerUser(string calldata _username, string calldata _profilePictureHash) external{
     userStorage.store(msg.sender, _username, _profilePictureHash);
   }
 
@@ -21,8 +21,13 @@ contract Podfi {
     return userStorage.getByAddress(msg.sender);
   }
 
-  function getUserByUsername(string calldata _username) public view returns (UserStorage.User memory) {
+  function getUserByUsername(string calldata _username) external view returns (UserStorage.User memory) {
     return userStorage.getByUsername(_username);
+  }
+
+  function getUserContentsByUsername(string calldata _username) external view returns (ContentStorage.Content memory) {
+    UserStorage user = userStorage.getUserByUsername(_username);
+    return contentStorage.getByCreatorAddress(user.addr);
   }
 
   function storeContent (string calldata _contentId, address _creatorAddress, string calldata _description, ContentStorage.ContentType _type, bool _isStreaming) public {

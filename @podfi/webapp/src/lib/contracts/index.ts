@@ -1,6 +1,6 @@
 import * as hooks from "./hooks"
 import * as helpers from './helpers'
-import hardhatArtifacts from "@podfi/contracts/artifacts/build-info/6801460c8e12bc2c1de64654dedb9113.json"
+import hardhatArtifacts from "@podfi/contracts/artifacts/build-info/b9e605ee6081d488dfa8b576a04ee7c4.json"
 
 const podfiAbi = hardhatArtifacts.output.contracts["contracts/Podfi.sol"].Podfi.abi
 

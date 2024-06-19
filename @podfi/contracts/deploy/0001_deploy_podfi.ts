@@ -6,7 +6,7 @@ const func: DeployFunction = async function(hre: HardhatRuntimeEnvironment) {
   const deployment = await Podfi.deploy()
   const address = await deployment.getAddress()
 
-  await hre.run("verify:verify", {
+  await hre.run("verify", {
     address,
   });
 };

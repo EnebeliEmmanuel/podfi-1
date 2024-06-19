@@ -36,6 +36,7 @@
     "base64-encode-file": "^1.0.7",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "embla-carousel-react": "^8.1.5",
     "ethers": "^6.13.1",
     "helia": "^4.2.4",
     "lucide-react": "^0.395.0",

@@ -14,7 +14,11 @@ contract ContentStorage is Ownable {
   struct Content {
     string id;
     address creatorAddress;
+    string hash;
+    string title;
     string description;
+    uint publishedAt;
+    uint duration;
     ContentType _type;
     bool isStreaming;
   }
@@ -25,29 +29,60 @@ contract ContentStorage is Ownable {
 
   constructor (address owner) Ownable(owner){}
   
-  function store(string calldata _contentId, address _creatorAddress, string calldata _description, ContentType _type, bool _isStreaming) public onlyOwner {
+  function store(
+    string calldata _contentId,
+    address _creatorAddress,
+    string calldata _title,
+    string calldata _description,
+    string calldata _hash,
+    uint _duration,
+    ContentType _type,
+    bool _isStreaming
+  ) public onlyOwner {
     Content memory content = Content({
       id: _contentId,
       creatorAddress: _creatorAddress,
+      title: _title,
       description: _description,
+      hash: _hash,
+      duration: _duration,
+      publishedAt: block.timestamp,
       _type: _type,
       isStreaming: _isStreaming
     });
 
-    require(_contentExists(contentIdToContent[_contentId]) == false, 'Content ID already taken');
+    require(_doesContentExist(contentIdToContent[_contentId]) == false, 'Content ID already taken');
 
     contentIdToCreatorAddress[_contentId] = _creatorAddress;
     contentIdToContent[_contentId] = content;
     creatorAddressToContentIds[_creatorAddress].push(_contentId);
   }
 
-  function get(string calldata _contentId) public view returns (Content memory) {
-    Content storage content = contentIdToContent[_contentId];
-    require(_contentExists(content), 'INEXISTENT_CONTENT');
+  function _getContentById(string memory _contentId) internal view returns (Content memory){
+    return contentIdToContent[_contentId];
+  }
+
+  function getById(string memory _contentId) external view returns (Content memory) {
+    Content memory content = _getContentById(_contentId);
+
+    if (!_doesContentExist(content))
+      revert('INEXISTENT_CONTENT');
+
     return content;
   }
 
-  function _contentExists(Content storage _content) internal view returns (bool) {
+  function getByCreatorAddress(address _creatorAddress) public view returns  (Content[] memory) {
+    string[] memory contentIds = creatorAddressToContentIds[_creatorAddress];
+    Content[] memory contents;
+
+    for (uint i = 0; i < contentIds.length; i++) {
+      contents[i]=_getContentById(contentIds[i]);
+    }
+
+    return contents;
+  }
+
+  function _doesContentExist(Content memory _content) internal view returns (bool) {
     return _content.creatorAddress != address(0);
   }
 }

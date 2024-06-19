@@ -8,8 +8,11 @@ contract UserStorage is Ownable {
   
   struct User {
     string username;
+    string name;
     address addr;
     string profilePictureHash;
+    uint subscribers;
+    string bio;
   }
 
   mapping(address => User) addressToUser;
@@ -43,14 +46,17 @@ contract UserStorage is Ownable {
     return user;
   }
 
-  function store(address _userAddress, string calldata _username, string calldata _profilePictureHash) public onlyOwner {
+  function store(address _userAddress, string calldata _username, string calldata _name, string calldata _bio, string calldata _profilePictureHash) public onlyOwner {
     if (_doesUserExist(_getByUsername(_username)) || _doesUserExist(_getByAddress(_userAddress)))
       revert("USER_ALREADY_REGISTERED_ERROR");
 
     User memory user = User({
       username: _username,
       addr: _userAddress,
-      profilePictureHash: _profilePictureHash
+      name: _name,
+      bio: _bio,
+      profilePictureHash: _profilePictureHash,
+      subscribers: 0
     });
     addressToUser[_userAddress] = user;
     usernameToAddress[_username] = _userAddress;
