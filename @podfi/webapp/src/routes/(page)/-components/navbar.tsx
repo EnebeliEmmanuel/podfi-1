@@ -43,7 +43,7 @@ export const Navbar = () => {
   return (
     <Section.Container
       ref={navbarRef}
-      className={`z-10 transition-all duration-300 ${navbarClasses}`}>
+      className={`z-20 transition-all duration-300 ${navbarClasses}`}>
       <nav className="flex justify-between">
         <Link
           to="/"

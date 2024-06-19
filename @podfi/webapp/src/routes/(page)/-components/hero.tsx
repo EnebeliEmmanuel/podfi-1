@@ -21,7 +21,7 @@ export const Hero = () => {
           height={250}
           className="xs:w-[300px] lg:w-[500px]"
         />
-        <div className="flex flex-col gap-y-6 mt-12 lg:mt-44 xl:mt-12">
+        <div className="flex flex-col gap-y-6 mt-12 lg:mt-44 xl:mt-12 relative z-10">
           <h1 className="font-bold text-3xl xs:text-4xl md:text-5xl lg:text-7xl  tracking-tighter">
             Your Podcast Hosting
             <span className="block mt-2">and Monetizing Platform</span>
@@ -32,7 +32,7 @@ export const Hero = () => {
             Everything you need for a successful podcast.
           </p>
           <Link
-            to="/ads-marketplace"
+            to="/podcasts"
             className="text-lg xs:text-xl md:text-2xl lg:text-3xl text-white bg-cyan-800 hover:bg-cyan-900 px-8 lg:px-12 py-6 rounded-xl w-fit"
           >
             Get Started

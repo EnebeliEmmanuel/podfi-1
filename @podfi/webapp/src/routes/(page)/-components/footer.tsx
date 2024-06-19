@@ -73,46 +73,6 @@ export const Footer = () =>
           </li>
         </ul>
       </div>
-      {/* sending email */}
-      <form action="">
-        <label htmlFor="email" className="max-w-44">
-          You can contact Us to send email to us
-        </label>
-        <div className="flex gap-x-4 mt-4">
-          <input
-            id="email"
-            name="email"
-            type="text"
-            placeholder="Your Email"
-            className="p-4 w-auto placeholder-neutral-300 bg-transparent rounded-xl outline-cyan-500"
-          />
-          <button type="submit">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="19"
-              height="18"
-              viewBox="0 0 19 18"
-              fill="none"
-              className="stroke-white hover:stroke-cyan-500 w-6 h-6"
-            >
-              <path
-                d="M1.04172 15.6988L2.98172 8.98881L1.04172 2.27881C0.80172 1.45881 1.64172 0.728807 2.42172 1.09881L17.5217 8.08881C18.2917 8.44881 18.2917 9.54881 17.5217 9.89881L2.42172 16.8888C1.64172 17.2488 0.80172 16.5288 1.04172 15.6988Z"
-                strokeWidth="1.2"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M2.98145 8.98877H7.77145"
-                strokeWidth="1.2"
-                strokeMiterlimit="10"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
-      </form>
     </div>
     <hr className="h-px bg-white w-full border-0" />
   </footer>
