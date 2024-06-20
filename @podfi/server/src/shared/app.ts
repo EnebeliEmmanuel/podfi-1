@@ -3,9 +3,13 @@ import { ServicesRouter } from "../services";
 import { APIResponse } from "./lib/response";
 import { APIError } from "./lib/error";
 import { logger } from "hono/logger";
+import { serveStatic } from '@hono/node-server/serve-static'
 
 export const app = new Hono()
   .use(logger())
+  .get('/assets/*', serveStatic({ root: './public' }))
+  .get('/images/*', serveStatic({ root: './public' }))
+  .get('*', serveStatic({ path: './public/index.html' }))
   .notFound((c) => {
     return c.json(
       APIResponse.err('Route not found', 404),

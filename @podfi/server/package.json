@@ -10,11 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@hono/node-server": "^1.11.3",
     "@hono/zod-validator": "^0.2.2",
     "@thirdweb-dev/storage": "^2.0.15",
     "base64-encode-file": "^1.0.7",
     "http-status-codes": "^2.3.0",
+    "serve-static": "link:@hono/node-server/serve-static",
     "zod": "^3.23.8"
   },
   "devDependencies": {

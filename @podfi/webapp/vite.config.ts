@@ -9,6 +9,9 @@ export default defineConfig({
     react(),
     tsconfigPaths(),
   ],
+  build: {
+    outDir: '../server/build/public'
+  },
   server: {
     proxy: {
       '/api': process.env.BACKEND_URL!
