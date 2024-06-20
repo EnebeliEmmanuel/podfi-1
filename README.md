@@ -107,7 +107,7 @@ https://github.com/EnebeliEmmanuel/PodFi/assets/58889001/43876dbc-57e9-4653-8f3e
 This Project was created by these awesome dedicated members
 
 <p align="center" width="100%">
-  <img src="https://github.com/Astrolith-Unleash-the-Programmer-in-You/astrolith-frontend/assets/58889001/8333478d-a884-47bd-867c-8629deeab965" alt="Team"/>
+  <img src="team.jpeg" alt="Team"/>
 </p>
 
 
