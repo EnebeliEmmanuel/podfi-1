@@ -73,6 +73,8 @@ const SetupPodcastForm = () => {
 
   const onSubmit = () => { }
 
+  const isSubmitting = form.formState.isSubmitting
+
   return (
     <Form {...form}>
       <form
