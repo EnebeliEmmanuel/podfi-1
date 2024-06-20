@@ -43,7 +43,7 @@ contract PodcastStorage is Ownable {
     uint _duration,
     string memory _recordingHash,
     string memory _streamingCode,
-    string memory _type,
+    Type _type,
     Status _status
   ) public onlyOwner {
 
@@ -57,7 +57,7 @@ contract PodcastStorage is Ownable {
       description: _description,
       duration: _duration,
       recordingHash: _recordingHash,
-      streamnigCode: _streamingCode,
+      streamingCode: _streamingCode,
       type_: _type,
       status: _status,
       publishedAt: block.timestamp
@@ -75,8 +75,8 @@ contract PodcastStorage is Ownable {
     uint _duration,
     string memory _recordingHash,
     string memory _streamingCode,
-    string memory _type,
-    Status status
+    Type _type,
+    Status _status
   ) public onlyOwner {
 
     if (!_doesPodcastExist(podcastIdToPodcast[_id]))

@@ -46,9 +46,6 @@ contract Podfi {
                          PodcastStorage.Type _type,
                          PodcastStorage.Status _status
     ) public {
-    if (msg.sender != _creatorAddress)
-      revert("CREATOR_SIGNER_MISMATCH");
-
     contentStorage.store(_contentId,
                          msg.sender,
                          _title,
