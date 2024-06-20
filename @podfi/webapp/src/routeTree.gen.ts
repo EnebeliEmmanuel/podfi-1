@@ -23,6 +23,7 @@ import { Route as pagePageCreatorUsernameUploadEpisodeImport } from './routes/(p
 import { Route as pagePageCreatorUsernameCreatePodcastImport } from './routes/(page)/_page/$creatorUsername/create-podcast'
 import { Route as pagePageCreatorUsernameActivePodcastImport } from './routes/(page)/_page/$creatorUsername/$activePodcast'
 import { Route as pagePageProfileUsernameIndexImport } from './routes/(page)/_page/profile/$username/index'
+import { Route as pagePageProfileUsernameCreateImport } from './routes/(page)/_page/profile/$username/create'
 
 // Create Virtual Routes
 
@@ -86,6 +87,12 @@ const pagePageCreatorUsernameActivePodcastRoute =
 const pagePageProfileUsernameIndexRoute =
   pagePageProfileUsernameIndexImport.update({
     path: '/profile/$username/',
+    getParentRoute: () => pagePageRoute,
+  } as any)
+
+const pagePageProfileUsernameCreateRoute =
+  pagePageProfileUsernameCreateImport.update({
+    path: '/profile/$username/create',
     getParentRoute: () => pagePageRoute,
   } as any)
 
@@ -163,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof pagePagePodcastsIndexImport
       parentRoute: typeof pagePageImport
     }
+    '/(page)/_page/profile/$username/create': {
+      id: '/_page/profile/$username/create'
+      path: '/profile/$username/create'
+      fullPath: '/profile/$username/create'
+      preLoaderRoute: typeof pagePageProfileUsernameCreateImport
+      parentRoute: typeof pagePageImport
+    }
     '/(page)/_page/profile/$username/': {
       id: '/_page/profile/$username/'
       path: '/profile/$username'
@@ -186,6 +200,7 @@ export const routeTree = rootRoute.addChildren({
       pagePageCreatorUsernameUploadEpisodeRoute,
       pagePagePodcastsIdRoute,
       pagePagePodcastsIndexRoute,
+      pagePageProfileUsernameCreateRoute,
       pagePageProfileUsernameIndexRoute,
     }),
   }),
@@ -220,6 +235,7 @@ export const routeTree = rootRoute.addChildren({
         "/_page/$creatorUsername/upload-episode",
         "/_page/podcasts/$id",
         "/_page/podcasts/",
+        "/_page/profile/$username/create",
         "/_page/profile/$username/"
       ]
     },
@@ -253,6 +269,10 @@ export const routeTree = rootRoute.addChildren({
     },
     "/_page/podcasts/": {
       "filePath": "(page)/_page/podcasts/index.tsx",
+      "parent": "/_page"
+    },
+    "/_page/profile/$username/create": {
+      "filePath": "(page)/_page/profile/$username/create.tsx",
       "parent": "/_page"
     },
     "/_page/profile/$username/": {

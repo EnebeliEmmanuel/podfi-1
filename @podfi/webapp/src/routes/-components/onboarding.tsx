@@ -155,9 +155,7 @@ const OnboardingForm: FunctionComponent<{ completed: () => Promise<unknown> }> =
               <FormControl>
                 <Input
                   type="file"
-                  onChange={(e) => {
-                    form.setValue('profilePicture', e.target.files!.item(0)!)
-                  }}
+                  {...field}
                 />
               </FormControl>
               <FormDescription />

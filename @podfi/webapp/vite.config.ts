@@ -17,7 +17,7 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
       "@podfi/contracts/types": path.resolve(__dirname, "../contracts/src/typechain"),
-      "@podfi/contracts/artifacts": path.resolve(__dirname, "../contracts/artifacts"),
+      "@podfi/contracts/artifacts": path.resolve(__dirname, "../contracts/artifacts/build-info/3f0e138fcb0e7947cc93b2fae3571988.json"),
     },
   },
 })

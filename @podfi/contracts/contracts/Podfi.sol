@@ -2,15 +2,15 @@
 pragma solidity ^0.8.20;
 
 import { UserStorage} from "./UserStorage.sol";
-import { ContentStorage} from "./ContentStorage.sol";
+import { PodcastStorage} from "./PodcastStorage.sol";
 
 contract Podfi {
   UserStorage userStorage;
-  ContentStorage contentStorage;
+  PodcastStorage contentStorage;
 
   constructor () {
     userStorage = new UserStorage(address(this));
-    contentStorage = new ContentStorage(address(this));
+    contentStorage = new PodcastStorage(address(this));
   }
 
   function registerUser(string memory _username,
@@ -32,14 +32,32 @@ contract Podfi {
     return userStorage.getByUsername(_username);
   }
 
-  function getUserContentsByUsername(string memory _username) external view returns (ContentStorage.Content[] memory) {
+  function getUserPodcastsByUsername(string memory _username) external view returns (PodcastStorage.Podcast[] memory) {
     UserStorage.User memory user = userStorage.getByUsername(_username);
     return contentStorage.getByCreatorAddress(user.addr);
   }
 
-  function storeContent (string memory _contentId, address _creatorAddress, string memory _title, string memory _description, string memory _hash, uint _duration, ContentStorage.ContentType _type, bool _isStreaming) public {
-    require(msg.sender == _creatorAddress, "CREATOR_SIGNER_MISMATCH");
-    contentStorage.store(_contentId, _creatorAddress, _title, _description, _hash, _duration, _type, _isStreaming);
+  function storePodcast (string memory _contentId,
+                         string memory _title,
+                         string memory _description,
+                         uint _duration,
+                         string memory _recordingHash,
+                         string memory _streamingCode,
+                         PodcastStorage.Type _type,
+                         PodcastStorage.Status _status
+    ) public {
+    if (msg.sender != _creatorAddress)
+      revert("CREATOR_SIGNER_MISMATCH");
+
+    contentStorage.store(_contentId,
+                         msg.sender,
+                         _title,
+                         _description,
+                         _duration,
+                         _recordingHash,
+                         _streamingCode,
+                         _type,
+                         _status);
   }
 }
 
