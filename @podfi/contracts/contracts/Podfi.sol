@@ -8,6 +8,9 @@ contract Podfi {
   UserStorage userStorage;
   PodcastStorage contentStorage;
 
+  event PodcastSetup(string title, string description, string category, string creatorUsername);
+  event UserRegistered(string username, string name, string bio, string profilePictureHash);
+
   constructor () {
     userStorage = new UserStorage(address(this));
     contentStorage = new PodcastStorage(address(this));
@@ -37,24 +40,25 @@ contract Podfi {
     return contentStorage.getByCreatorAddress(user.addr);
   }
 
-  function storePodcast (string memory _contentId,
+  function setupPodcast (string memory _contentId,
                          string memory _title,
                          string memory _description,
-                         uint _duration,
-                         string memory _recordingHash,
-                         string memory _streamingCode,
-                         PodcastStorage.Type _type,
-                         PodcastStorage.Status _status
+                         string memory _category
     ) public {
+      UserStorage.User memory creator = userStorage.getByAddress(msg.sender);
+
     contentStorage.store(_contentId,
-                         msg.sender,
+                         creator.addr,
                          _title,
                          _description,
-                         _duration,
-                         _recordingHash,
-                         _streamingCode,
-                         _type,
-                         _status);
+                         _category,
+                         0,
+                         "",
+                         "",
+                         PodcastStorage.Type.Video,
+                         PodcastStorage.Status.StreamingNotStarted);
+                         
+                         emit PodcastSetup(_title, _description, _category, creator.username);
   }
 }
 

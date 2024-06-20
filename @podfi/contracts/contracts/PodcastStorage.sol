@@ -12,6 +12,7 @@ contract PodcastStorage is Ownable {
   }
 
   enum Status {
+    StreamingNotStarted,
     StreamingStarted,
     StreamingEnded
   }
@@ -21,6 +22,7 @@ contract PodcastStorage is Ownable {
     address creatorAddress;
     string title;
     string description;
+    string category;
     uint duration;
     string recordingHash;
     string streamingCode;
@@ -40,6 +42,7 @@ contract PodcastStorage is Ownable {
     address _creatorAddress,
     string memory _title,
     string memory _description,
+    string memory _category,
     uint _duration,
     string memory _recordingHash,
     string memory _streamingCode,
@@ -55,6 +58,7 @@ contract PodcastStorage is Ownable {
       creatorAddress: _creatorAddress,
       title: _title,
       description: _description,
+      category: _category,
       duration: _duration,
       recordingHash: _recordingHash,
       streamingCode: _streamingCode,
@@ -72,6 +76,7 @@ contract PodcastStorage is Ownable {
     string memory _id,
     string memory _title,
     string memory _description,
+    string memory _category,
     uint _duration,
     string memory _recordingHash,
     string memory _streamingCode,
@@ -86,6 +91,7 @@ contract PodcastStorage is Ownable {
     podcast.title = _title;
     podcast.description = _description;
     podcast.duration = _duration;
+    podcast.category = _category;
     podcast.recordingHash = _recordingHash;
     podcast.streamingCode = _streamingCode;
     podcast.type_ = _type;
