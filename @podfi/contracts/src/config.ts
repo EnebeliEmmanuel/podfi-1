@@ -1,4 +1,4 @@
-import { z } from "zod" 
+import { z } from "zod"
 
 const EnvSchema = z.object({
   SEPOLIA_PRIVATE_KEY: z.string(),
@@ -13,9 +13,7 @@ export const config = {
     sepolia: {
       rpcUrl: env.SEPOLIA_RPC_URL,
       etherscanApiKey: env.SEPOLIA_ETHERSCAN_API_KEY,
-      accounts: [
-        env.SEPOLIA_PRIVATE_KEY
-      ]
-    }
-  }
+      accounts: [env.SEPOLIA_PRIVATE_KEY],
+    },
+  },
 }

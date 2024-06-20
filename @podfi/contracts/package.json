@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "scripts": {
     "compile": "hardhat compile",
+    "verify": "hardhat verify --network sepolia",
     "lint": "pnpm lint:contracts && pnpm format:check",
     "lint:fix": "solhint 'contracts/**/*.sol' --fix",
     "lint:contracts": "solhint 'contracts/*.sol'",
     "lint:contracts:fix": "solhint 'contracts/**/*.sol' --fix",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
-    "deploy": "hardhat depoloy"
+    "deploy": "hardhat deploy --network sepolia"
   },
   "dependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^1.0.3",
@@ -28,8 +29,6 @@
     "hardhat": "^2.22.5",
     "hardhat-deploy": "^0.12.4",
     "hardhat-deploy-ethers": "^0.4.2",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
     "nodemon": "^3.0.1",
     "openai": "^4.21.0",
     "ora": "5.4.1",
@@ -40,15 +39,6 @@
     "solhint-plugin-prettier": "^0.0.5",
     "solidity-coverage": "^0.8.2",
     "zod": "^3.23.8"
-  },
-  "lint-staged": {
-    "*.{js,json,yml,yaml}": [
-      "prettier --write"
-    ],
-    "*.sol": [
-      "prettier --write",
-      "solhint"
-    ]
   },
   "prettier": {
     "trailingComma": "es5",

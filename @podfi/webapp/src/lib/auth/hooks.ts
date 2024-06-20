@@ -2,6 +2,7 @@ import { UserStorage } from "@podfi/contracts/types/contracts/UserStorage"
 import { contracts } from "../contracts"
 import { useAccount, useReadContract } from "wagmi"
 import { config } from "../config"
+import { useToast } from "@/components/ui/use-toast"
 
 export type User = UserStorage.UserStruct
 
@@ -45,6 +46,7 @@ export const useAuthUnsafe = () => {
 
 export const useAuth = (): AuthState => {
   const account = useAccount()
+  const { toast } = useToast()
 
   const { data, status, error, refetch } = useReadContract({
     abi: contracts.abi.podfi,
@@ -68,7 +70,19 @@ export const useAuth = (): AuthState => {
         retry: refetch
       }
 
-    console.log(error)
+    if (error.name === 'ContractFunctionExecutionError') {
+      toast({
+        title: "Network error",
+        description: "An error occrred while trying to fetch your profile",
+        variant: "destructive"
+      })
+      return {
+        status: 'error',
+        retry: refetch
+      }
+    }
+
+    console.log(error.name)
 
     return {
       status: 'error',

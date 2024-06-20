@@ -1,3 +1,7 @@
 export const ConnectButton = () => {
-  return <w3m-button />
+  return (
+    <div className="bg-cyan-800 rounded-3xl">
+      <w3m-button />
+    </div>
+  )
 }

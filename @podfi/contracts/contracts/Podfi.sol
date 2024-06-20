@@ -20,6 +20,7 @@ contract Podfi {
                       _name,
                       _bio,
                       _profilePictureHash);
+                      emit UserRegistered(_username, _name, _bio, _profilePictureHash);
   }
 
   function getUserProfile() public view returns (UserStorage.User memory) {
