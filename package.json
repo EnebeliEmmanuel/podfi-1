@@ -1,6 +1,8 @@
 {
   "name": "podfi",
   "dependencies": {
+    "@huddle01/react": "^2.0.14",
+    "create-react-app": "^5.0.1",
     "hono": "^4.4.7"
   }
 }
