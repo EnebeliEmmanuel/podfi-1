@@ -15,8 +15,8 @@
       "@podfi/contracts/types/*": [
         "../contracts/src/typechain/*"
       ],
-      "@podfi/contracts/artifacts": [
-        "../contracts/artifacts/build-info/3f0e138fcb0e7947cc93b2fae3571988.json"
+      "@podfi/contracts/abis/podfi": [
+        "../contracts/abis/contracts/Podfi.sol/Podfi.json"
       ],
       "@podfi/server/*": [
         "../server/src/*"

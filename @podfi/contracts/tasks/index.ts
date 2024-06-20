@@ -1,3 +1,5 @@
+import "./deploy-podfi"
+import "./upgrade-podfi"
 import { task } from "hardhat/config";
 
 task("fund", "Funds a wallet with 10 ETH")
@@ -8,4 +10,4 @@ task("fund", "Funds a wallet with 10 ETH")
       to: address,
       value: ethers.parseEther('10')
     })
-});
+  });

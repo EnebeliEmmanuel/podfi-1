@@ -11,11 +11,6 @@ contract Podfi {
   event PodcastSetup(string title, string description, string category, string creatorUsername);
   event UserRegistered(string username, string name, string bio, string profilePictureHash);
 
-  constructor () {
-    userStorage = new UserStorage(address(this));
-    contentStorage = new PodcastStorage(address(this));
-  }
-
   function registerUser(string memory _username,
                         string memory _name,
                         string memory _bio,

@@ -1,8 +1,10 @@
 import "@nomicfoundation/hardhat-toolbox";
+import "@openzeppelin/hardhat-upgrades"
 import "@nomicfoundation/hardhat-ethers";
 import '@typechain/hardhat'
 import 'hardhat-deploy'
 import 'hardhat-deploy-ethers'
+import 'hardhat-abi-exporter'
 // import "@nomicfoundation/hardhat-verify";
 import { HardhatUserConfig } from "hardhat/config";
 import "./tasks"
@@ -29,5 +31,9 @@ export default {
       chainId:11155111,
       accounts: config.networks.sepolia.accounts
     }
-  }
+  },
+abiExporter: {
+  path: './abis',
+runOnCompile: true
+}
 } satisfies HardhatUserConfig

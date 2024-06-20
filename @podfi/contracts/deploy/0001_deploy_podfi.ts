@@ -7,12 +7,12 @@ const func: DeployFunction = async function(hre: HardhatRuntimeEnvironment) {
   await deployment.waitForDeployment()
   const address = await deployment.getAddress()
 
-  await hre.run("verify", {
+  await hre.run("verify:verify", {
     address,
-  });
+  })
 };
 
-func.tags = ['deploy_podfi'];
+func.tags = ['deploy_podfi']; 
 
-export default func;
+export default func; 
 

@@ -1,11 +1,9 @@
 import * as helpers from './helpers'
-import hardhatArtifacts from "@podfi/contracts/artifacts"
-
-const podfiAbi = hardhatArtifacts.output.contracts["contracts/Podfi.sol"].Podfi.abi
+import PodfiAbi from "@podfi/contracts/abis/podfi"
 
 export const contracts = {
   abi: {
-    podfi: podfiAbi
+    podfi: PodfiAbi
   },
   helpers
 }
